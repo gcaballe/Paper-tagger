@@ -4,8 +4,9 @@ body {
 }
 
 .form-container {
-  max-width: 600px;
+  max-width: 100%; /* Adjusted for better mobile experience */
   margin: 0 auto;
+  padding: 10px; /* Added padding for mobile devices */
 }
 
 .textarea-container {
@@ -26,24 +27,37 @@ textarea {
   padding: 10px;
   font-size: 16px;
   background-color: #f9f9f9;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow */
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+textarea:focus {
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow on focus */
 }
 
 .button-group {
   display: flex;
   gap: 20px;
   margin-top: 10px;
+  justify-content: space-around; /* Centering buttons on smaller screens */
 }
 
 .button-group button {
-  width: 100px; /* You can adjust this for larger buttons */
-  height: 100px; /* Make buttons square */
-  font-size: 20px; /* Increase font size */
+  width: 120px; /* Adjusted for larger touch targets */
+  height: 120px; /* Bigger for mobile use */
+  font-size: 20px;
   font-weight: bold;
   border: none;
-  border-radius: 15px; /* Rounded corners */
+  border-radius: 15px;
   cursor: pointer;
   color: white;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* 3D-like shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth animations */
+}
+
+.button-group button:active {
+  transform: scale(0.95); /* Slight scale-down on click for interaction effect */
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); /* Reduced shadow when clicked */
 }
 
 .button-yes {
@@ -56,4 +70,17 @@ textarea {
 
 #question2-container {
   display: none;
+}
+
+/* Media query for smaller devices */
+@media (max-width: 600px) {
+  .button-group button {
+    width: 80px; /* Smaller buttons for narrow screens */
+    height: 80px;
+    font-size: 16px; /* Adjusted font size */
+  }
+
+  textarea {
+    height: 120px; /* Adjusted height for smaller screens */
+  }
 }

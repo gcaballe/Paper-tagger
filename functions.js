@@ -54,11 +54,46 @@ document.addEventListener('DOMContentLoaded', function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Response handling, if needed
             console.log(xhr.responseText);
+
+            fetchText();
         }
     };
   
     xhr.send(JSON.stringify(data));
 
-    }
+ }
    
+ window.fetchText = function() {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'fetch_text.php', true); // Fetch data from fetch_text.php
+
+    var question2 = document.getElementById("question2-container");
+    question2.style.display = "none";
+
+    xhr.onload = function () {
+      
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            // On success, fill the textarea with the response text
+            document.getElementById('paper_text').value = response.text;
+            document.getElementById('identificador_numeric').value = response.identificador_numeric;
+        } else {
+            console.info('fora');
+            // If an error occurs, log it
+            console.error('Error fetching data: ' + xhr.status);
+        }
+    };
+
+    xhr.onerror = function () {
+        console.error('Request failed');
+    };
+
+    xhr.send(); // Send the request
+ }
+
+    // Automatically fetch the text when the page loads
+  window.onload = function () {
+    fetchText();
+ };
+
 });

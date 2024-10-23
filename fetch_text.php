@@ -1,9 +1,9 @@
 <?php
 // MySQL connection details
-$host = 'localhost';  // Your host
-$dbname = 'melanoma';  // Your database name
-$username = 'debian-sys-maint';  // Replace with your MySQL username
-$password = 'S1sMF9txb8Ed3MQR';  // Replace with your MySQL password
+$host = 'localhost';
+$dbname = 'melanoma';
+$username = 'debian-sys-maint';
+$password = 'S1sMF9txb8Ed3MQR';
 
 try {
     // Connect to the database
@@ -11,7 +11,8 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Query to get a random row from the 'papers' table
-    $query = "SELECT * FROM papers ORDER BY RAND() LIMIT 1"; // Replace 'papers' with your table name if needed
+    $query = "SELECT * FROM papers WHERE estat NOT IN ('busy','tagged') ORDER BY RAND() LIMIT 1";
+    
     $stmt = $pdo->query($query);
     if ($stmt) {
         // Fetch the random row

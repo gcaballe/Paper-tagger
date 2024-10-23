@@ -4,40 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario Condicional</title>
+  <link rel="icon" type="image/x-icon" href="eddieface.ico">
   <link rel="stylesheet" href="styles.css"> <!-- Load the external CSS file -->
   <script src="functions.js"></script> <!-- Load the external JavaScript file -->
-  <script>
-    // Function to fetch the text from the PHP file and load it into the textarea
-    function fetchText() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'fetch_text.php', true); // Fetch data from fetch_text.php
-
-        xhr.onload = function () {
-          
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                // On success, fill the textarea with the response text
-                document.getElementById('paper_text').value = response.text;
-                document.getElementById('identificador_numeric').value = response.identificador_numeric;
-            } else {
-                console.info('fora');
-                // If an error occurs, log it
-                console.error('Error fetching data: ' + xhr.status);
-            }
-        };
-
-        xhr.onerror = function () {
-            console.error('Request failed');
-        };
-
-        xhr.send(); // Send the request
-    }
-
-    // Automatically fetch the text when the page loads
-    window.onload = function () {
-        fetchText();
-    };
-</script>
 </head>
 <body>
 
