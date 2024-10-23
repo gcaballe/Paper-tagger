@@ -7,9 +7,25 @@
   <link rel="icon" type="image/x-icon" href="eddieface.ico">
   <link rel="stylesheet" href="styles.css"> <!-- Load the external CSS file -->
   <script src="functions.js"></script> <!-- Load the external JavaScript file -->
+  <script></script>
 </head>
 <body>
 
+  <div class="user-input" style="display: flex; align-items: center; margin-bottom: 20px;">
+
+    <label for="toggle-explanations" style="display: flex; align-items: center; margin-right: 10px;">
+        <input type="checkbox" id="toggle-explanations" onchange="toggleExplanations()" checked style="display: none;">
+        <span class="slider"></span>
+        <span style="margin-left: 5px;">Explicacions</span>
+    </label>
+
+    <!-- Existing user input -->
+    <label for="user" style="margin-right: 10px;">Usuari:
+      <input type="text" id="user" maxlength="15" style="margin-left: 5px;">
+    </label>
+</div>
+
+  
   <div class="form-container">
     <form>
 
@@ -20,19 +36,61 @@
         <textarea id="paper_text" name="paper_text" readonly></textarea> <!-- Added readonly attribute -->
       </div>
 
-      <label>¿Es un melanoma?</label>
-      <div class="button-group">
-        <button type="button" class="button-yes" onclick="toggleQuestion2('si')">Sí</button>
-        <button type="button" class="button-no" onclick="updatePaperFunction(1, 'no')">No</button>
-      </div>
-
-      <div id="question2-container">
-        <label>¿Es un melanoma 2?</label>
+      <!-- Question 1 -->
+      <div class="question-container">
+        <p>És melanoma?</p>
+        <div class="explanation">
+          Busca descripcions de lesions malignes o termes que indiquin directament melanoma, com:
+          <ul>
+            <li>"Melanoma"</li>
+            <li>"Melanoma maligne"</li>
+            <li>"Lesió pigmentada amb característiques malignes"</li>
+          </ul>
+          Paraules clau relacionades amb malignitat haurien de desencadenar l’etiquetatge com a melanoma.
+        </div>
         <div class="button-group">
-          <button type="button" class="button-yes" onclick="updatePaperFunction(2,'si')">Sí</button>
-          <button type="button" class="button-no" onclick="updatePaperFunction(2,'no')">No</button>
+          <button type="button" class="button-yes" onclick="toggleQuestions(1,'si')">Sí</button>
+          <button type="button" class="button-no" onclick="toggleQuestions(1, 'no')">No</button>
         </div>
       </div>
+
+      <!-- Question 2 -->
+      <div id="question2-container" class="question-container">
+        <p>És un melanoma in situ?</p>
+        <div class="explanation">
+          Fixa’t en frases que indiquin un creixement confinat o superficial:
+          <ul>
+            <li>"Melanoma in situ"</li>
+            <li>"Confinat a l’epidermis"</li>
+            <li>"Sense evidència d'invasió a la dermis"</li>
+          </ul>
+          Aquestes indicacions assenyalen que el melanoma no ha penetrat més enllà de la capa externa de la pell i s’hauria d’etiquetar com a in situ.
+        </div>        
+        <div class="button-group">
+          <button type="button" class="button-yes" onclick="toggleQuestions(2,'si')">Sí</button>
+          <button type="button" class="button-no" onclick="toggleQuestions(2,'no')">No</button>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div id="question3-container" class="question-container">
+        <p>És un melanoma invasiu?</p>
+        <div class="explanation">
+          Busca mencions de la profunditat d'invasió a la dermis o més enllà:
+          <ul>
+            <li>"Melanoma invasiu"</li>
+            <li>"Índex de Breslow" (qualsevol menció a una mesura de Breslow implica melanoma invasiu)</li>
+            <li>"Invasió de la dermis o del teixit subcutani"</li>
+            <li>"Activitat mitòtica a les capes de la dermis"</li>
+          </ul>
+          Qualsevol referència a la penetració més enllà de l'epidermis indica que el melanoma és invasiu.
+        </div>        
+        <div class="button-group">
+          <button type="button" class="button-yes" onclick="toggleQuestions(3,'si')">Sí</button>
+          <button type="button" class="button-no" onclick="toggleQuestions(3,'no')">No</button>
+        </div>
+      </div>
+
     </form>
   </div>
 

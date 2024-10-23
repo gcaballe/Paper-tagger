@@ -1,47 +1,76 @@
 document.addEventListener('DOMContentLoaded', function () {
   
-  window.toggleQuestion2 = function(answer) {
-    // Get the second question element
-    var question2 = document.getElementById("question2-container");
-
-    // Check if the answer is 'si'
-    if (answer === 'si') {
-        // If the answer is 'si', show the second question
-        question2.style.display = "block";
-    } else {
-        // Otherwise, hide the second question
-        question2.style.display = "none";
-    }
-  };
+    window.toggleQuestions = function(question, answer) {
+        // Get the second and third question elements
+        var question2 = document.getElementById("question2-container");
+        var question3 = document.getElementById("question3-container");
+    
+        if (question === 1) {
+            // For question 1: 'si' shows question 2, 'no' does nothing
+            if (answer === 'si') {
+                question2.style.display = "block";
+            }
+            if (answer === 'no') {
+                updatePaperFunction(1, 'no');
+            }
+        } else if (question === 2) {
+            // For question 2: 'no' shows question 3, 'si' does nothing
+            if (answer === 'si') {
+                updatePaperFunction(2, 'si');
+            }
+            if (answer === 'no') {
+                question3.style.display = "block";
+            }
+        } else if (question === 3) {
+            // For question 2: 'no' shows question 3, 'si' does nothing
+            if (answer === 'si') {
+                updatePaperFunction(3, 'si');
+            }
+            if (answer === 'no') {
+                updatePaperFunction(3, 'no');
+            }
+        }
+        // For question 3: always do nothing (no code needed)
+    };
 
 
   window.updatePaperFunction = function(question, answer) {
 
     // Get the value of the hidden input field for numero_identificador
     var identificador = document.getElementById('identificador_numeric').value;
+    var user = document.getElementById('user').value;
 
     // Prepare data for the SQL update request
     var data = {
         'numero_identificador': identificador,
         'estat': 'tagged', // You can keep this if necessary
-        'pregunta1': false, // Default value
-        'pregunta2': false  // Default value
+        'user': user,
+        'pregunta1': false,
+        'pregunta2': false,
+        'pregunta3': false
     };
 
     // Determine the values of pregunta1 and pregunta2 based on input
     if (question === 1) {
-        if (answer === 'no') {
-            data.pregunta1 = false; // Update pregunta1 to false for question 1
-            data.pregunta2 = false;
-        } else if (answer === 'si') {
-            data.pregunta1 = true; // Do nothing (just set it to true if you want)
+        if (answer === 'si') {
+            return;
+        } else if (answer === 'no') {
+            pregunta1 = true;
         }
     } else if (question === 2) {
         data.pregunta1 = true; // Always true if question 2 is asked
-        if (answer === 'no') {
-            data.pregunta2 = false; // Update pregunta2 to false for question 2
-        } else if (answer === 'si') {
-            data.pregunta2 = true; // Update pregunta2 to true for question 2
+        if (answer === 'si') {
+            data.pregunta2 = true;
+        } else if (answer === 'no') {
+            return;
+        }
+    } else if (question === 3) {
+        data.pregunta1 = true; // Always true if question 2 is asked
+        data.pregunta2 = false;// Always false if question 3 is asked
+        if (answer === 'si') {
+            data.pregunta3 = true;
+        } else if (answer === 'no') {
+            data.pregunta3 = false;
         }
     }
 
@@ -67,8 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'fetch_text.php', true); // Fetch data from fetch_text.php
 
-    var question2 = document.getElementById("question2-container");
-    question2.style.display = "none";
+    document.getElementById("question2-container").style.display = "none";
+    document.getElementById("question3-container").style.display = "none";
 
     xhr.onload = function () {
       
@@ -95,5 +124,60 @@ document.addEventListener('DOMContentLoaded', function () {
   window.onload = function () {
     fetchText();
  };
+
+ window.toggleExplanations = function() {
+    // Get all elements with the class 'explanation'
+    var explanations = document.querySelectorAll('.explanation');
+    var current = document.querySelectorAll('.explanation')[0].style.display;
+    console.info(current);
+    // Toggle the visibility of each explanation
+    explanations.forEach(function(e) {
+        if (current == "block" || current == "") {
+            e.style.display = "none"; // Show the explanation
+        } else {
+            e.style.display = "block"; // Hide the explanation
+        }
+    });
+  };
+
+ //Now its the code to save the username as a cookie
+ // Function to set a cookie
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+// Function to get a cookie
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Load user input from cookies on page load
+window.addEventListener('load', function() {
+    var savedUser = getCookie('user');
+    if (savedUser) {
+        document.getElementById('user').value = savedUser;
+    }
+});
+
+// Save user input to cookies on change
+document.getElementById('user').addEventListener('change', function() {
+    setCookie('user', this.value, 7); // Store for 7 days
+});
+
+
+
 
 });

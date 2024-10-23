@@ -17,17 +17,21 @@ try {
         $estat = $input['estat'];
         $pregunta1 = $input['pregunta1'];
         $pregunta2 = $input['pregunta2'];
+        $pregunta3 = $input['pregunta3'];
+        $user = $input['user'];
 
         // Prepare the SQL update query
         $sql = "UPDATE papers 
-                SET estat = :estat, pregunta1 = :pregunta1, pregunta2 = :pregunta2 
+                SET estat = :estat, pregunta1 = :pregunta1, pregunta2 = :pregunta2, pregunta3 = :pregunta3, user = :user 
                 WHERE numero_identificador = :numero_identificador";
                 
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':estat', $estat);
         $stmt->bindParam(':pregunta1', $pregunta1, PDO::PARAM_BOOL);
         $stmt->bindParam(':pregunta2', $pregunta2, PDO::PARAM_BOOL);
+        $stmt->bindParam(':pregunta3', $pregunta3, PDO::PARAM_BOOL);
         $stmt->bindParam(':numero_identificador', $numero_identificador);
+        $stmt->bindParam(':user', $user);
         
         // Execute the query
         if ($stmt->execute()) {
