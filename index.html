@@ -20,8 +20,6 @@
         <span style="margin-left: 5px;">Explicacions</span>
     </label>
     
-    <i onclick="updatePaperFunction('flag','flag')" class="fas fa-flag" style="color: red; margin-right: 5px;"></i>
-
     <!-- Existing user input -->
     <label for="user" style="margin-right: 10px;">Usuari:
       <input type="text" id="user" maxlength="15" style="margin-left: 5px;">
@@ -34,52 +32,65 @@
 
       <input type="hidden" id="identificador_numeric" value="">
 
+      <div class="question-container explanation">
+        <span>En aquest estudi només se seleccionen melanomes d'origen cutani ("pell").</span>
+        <div style="margin-top:10px; color: rgb(236, 54, 54); font-size: 0.8em;">
+          <span>S'han de marcar com a 'red flag' els texts que compleixin alguna de les següents condicions:</span>
+          <ul>
+            <li>Mostres de teixits diferents a la pell (ganglis, mucoses, coroides, parts toves, vulva, vagina, glàndula, etc.)</li>
+            <li>Estudis genètics (p. ex., 'Estudi mutacional gen BRAF')"</li>
+          </ul>
+        </div>
+      </div>
+
       <div class="textarea-container">
-        <label for="paper_text">Text del paper</label>
+        <label for="paper_text">Text diagnòstic</label>
+        <i onclick="updatePaperFunction('flag','flag')" class="redflag fas fa-flag" style="color: red; margin-right: 5px;"></i>
         <textarea id="paper_text" name="paper_text" readonly></textarea> <!-- Added readonly attribute -->
       </div>
 
       <!-- Question 1 -->
       <div class="question-container">
-        <p>És melanoma?</p>
+        <p>És melanoma cutani?</p>
         <div class="explanation">
           Busca descripcions de lesions malignes o termes que indiquin directament melanoma, com:
           <ul>
             <li>"Melanoma"</li>
             <li>"Melanoma maligne"</li>
-            <li>"Lesió pigmentada amb característiques malignes"</li>
+            <li>"Lesió melanocítica maligna"</li>
           </ul>
-          Paraules clau relacionades amb malignitat haurien de desencadenar l’etiquetatge com a melanoma.
+          La displàsia (lleu, moderada o severa) per si sola no s'ha d'etiquetar com a melanoma tot i que sigui un atribut present en lesions malignes. Ara bé, un nevus amb displàsia pot coexistir amb un melanoma (en casos de melanoma sobre un nevus melanocític previ).
         </div>
         <div class="button-group">
           <button type="button" class="button-yes" onclick="toggleQuestions(1,'si')">Sí</button>
           <button type="button" class="button-no" onclick="toggleQuestions(1, 'no')">No</button>
-          <button type="button" class="button-skip" onclick="toggleQuestions(1, 'skip')">Skip</button>
         </div>
       </div>
 
       <!-- Question 2 -->
       <div id="question2-container" class="question-container">
-        <p>Quin tipus de melanoma és?</p>
+        <p>Quin tipus de melanoma cutani és?</p>
         <div class="explanation">
           <p>Melanoma in situ</p>
           Fixa’t en frases que indiquin un creixement confinat o superficial:
           <ul>
-            <li>"Melanoma in situ"</li>
-            <li>"Confinat a l’epidermis"</li>
-            <li>"Sense evidència d'invasió a la dermis"</li>
+            <li>"Melanoma cutani in situ."</li>
+            <li>"Confinat a l’epidermis."</li>
+            <li>"Sense evidència d'invasió a la dermis."</li>
           </ul>
           Aquestes indicacions assenyalen que el melanoma no ha penetrat més enllà de la capa externa de la pell i s’hauria d’etiquetar com a in situ.
         </div>
         
         <div class="explanation">
-          <p>Melanoma invasiu</p>
+          <p>Melanoma cutani invasiu</p>
           Busca mencions de la profunditat d'invasió a la dermis o més enllà:
           <ul>
-            <li>"Melanoma invasiu"</li>
-            <li>"Índex de Breslow" (qualsevol menció a una mesura de Breslow implica melanoma invasiu)</li>
-            <li>"Invasió de la dermis o del teixit subcutani"</li>
-            <li>"Activitat mitòtica a les capes de la dermis"</li>
+            <li>"Melanoma invasiu/invasor."</li>
+            <li>"Índex de Breslow" (qualsevol menció a una mesura de Breslow implica melanoma invasiu).</li>
+            <li>"Índex de Clark 2 o superior." <li>
+            <li>"Invasió de la dermis o del teixit subcutani."</li>
+            <li>"Activitat mitòtica a les capes de la dermis."</li>
+            <li>"L'infiltrat limfocitari a la dermis no equival a invasió per cèl·lules melanocítiques sinó a reacció inflamatòria."<li>
           </ul>
           Qualsevol referència a la penetració més enllà de l'epidermis indica que el melanoma és invasiu.
         </div>              
@@ -87,29 +98,20 @@
           <button type="button" class="button-yes" onclick="toggleQuestions(2,'si')">In situ</button>
           <button type="button" class="button-no" onclick="toggleQuestions(2,'no')">Invasiu</button>
           <button type="button" class="button-no-especificat" onclick="toggleQuestions(2,'no-especificat')">No especificat</button>
-          <button type="button" class="button-skip" onclick="toggleQuestions(2,'skip')">Skip</button>
         </div>
 
         
       </div>
 
-      <!-- Question 3 
-       Question 3 ha sigut deprecated, i s'ha afegit a question2
-      <div id="question3-container" class="question-container">
-        
-        <div class="button-group">
-          <button type="button" class="button-yes" onclick="toggleQuestions(3,'si')">Sí</button>
-          <button type="button" class="button-no" onclick="toggleQuestions(3,'no')">No</button>
-        </div>
-      </div>-->
-
     </form>
   </div>
 
     <!-- Go Back button positioned at the bottom right -->
-  <div class="endarrere-button">
-    <button onclick="goBackButton()" style="padding: 8px 16px; font-size: 1rem; border-radius: 5px;">Endarrere</button>
+  <div class="footer">
+    <button class="endarrere-button" onclick="goBackButton()">Endarrere</button>
+    <button type="button" class="skip-button" onclick="toggleQuestions(1, 'skip')">Skip</button>
   </div>
+  
 
 </body>
 </html>

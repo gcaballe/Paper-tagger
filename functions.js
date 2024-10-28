@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   
-    var lastNumeroIdentificador = null; //per poder tornar endarrere
+    var idStack = []; //per poder tornar endarrere
 
     window.toggleQuestions = function(question, answer) {
 
@@ -90,11 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
             data.pregunta1 = true;
             data.pregunta2 = false;
             data.pregunta3 = false;
-        } else if (answer === 'skip') {
-            data.pregunta1 = null;
-            data.pregunta2 = null;
-            data.pregunta3 = null;
-            data.estat = 'pending';
         }
     } else if (question === 'flag') {
         data.estat = 'flagged';
@@ -140,15 +135,13 @@ document.addEventListener('DOMContentLoaded', function () {
             var response = JSON.parse(xhr.responseText);
 
             // Agafo el valor vell, per poder tirar endarrere
-            lastNumeroIdentificador = document.getElementById('identificador_numeric').value;
+            idStack.push(response.identificador_numeric);
 
             // On success, fill the textarea with the response text
             document.getElementById('paper_text').value = response.text;
             document.getElementById('identificador_numeric').value = response.identificador_numeric;
 
-            
         } else {
-            console.info('fora');
             // If an error occurs, log it
             console.error('Error fetching data: ' + xhr.status);
         }
@@ -220,8 +213,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     window.goBackButton = function() {
-        console.info('Torno a fetchejar el text: ' + lastNumeroIdentificador);
+        
+        if(idStack.length == 1) return;
+        
+        idStack.pop(); //llenço l'actual TOP
+        lastNumeroIdentificador = idStack.pop(); // agafo el d'abans
+        
         fetchText(lastNumeroIdentificador);
+        
     }
 
 });
