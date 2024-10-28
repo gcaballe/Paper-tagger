@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario Condicional</title>
+  <title>Formulari condicional</title>
   <link rel="icon" type="image/x-icon" href="eddieface.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="styles.css"> <!-- Load the external CSS file -->
   <script src="functions.js"></script> <!-- Load the external JavaScript file -->
   <script></script>
@@ -18,6 +19,8 @@
         <span class="slider"></span>
         <span style="margin-left: 5px;">Explicacions</span>
     </label>
+    
+    <i onclick="updatePaperFunction('flag','flag')" class="fas fa-flag" style="color: red; margin-right: 5px;"></i>
 
     <!-- Existing user input -->
     <label for="user" style="margin-right: 10px;">Usuari:
@@ -51,13 +54,15 @@
         <div class="button-group">
           <button type="button" class="button-yes" onclick="toggleQuestions(1,'si')">Sí</button>
           <button type="button" class="button-no" onclick="toggleQuestions(1, 'no')">No</button>
+          <button type="button" class="button-skip" onclick="toggleQuestions(1, 'skip')">Skip</button>
         </div>
       </div>
 
       <!-- Question 2 -->
       <div id="question2-container" class="question-container">
-        <p>És un melanoma in situ?</p>
+        <p>Quin tipus de melanoma és?</p>
         <div class="explanation">
+          <p>Melanoma in situ</p>
           Fixa’t en frases que indiquin un creixement confinat o superficial:
           <ul>
             <li>"Melanoma in situ"</li>
@@ -65,17 +70,10 @@
             <li>"Sense evidència d'invasió a la dermis"</li>
           </ul>
           Aquestes indicacions assenyalen que el melanoma no ha penetrat més enllà de la capa externa de la pell i s’hauria d’etiquetar com a in situ.
-        </div>        
-        <div class="button-group">
-          <button type="button" class="button-yes" onclick="toggleQuestions(2,'si')">Sí</button>
-          <button type="button" class="button-no" onclick="toggleQuestions(2,'no')">No</button>
         </div>
-      </div>
-
-      <!-- Question 3 -->
-      <div id="question3-container" class="question-container">
-        <p>És un melanoma invasiu?</p>
+        
         <div class="explanation">
+          <p>Melanoma invasiu</p>
           Busca mencions de la profunditat d'invasió a la dermis o més enllà:
           <ul>
             <li>"Melanoma invasiu"</li>
@@ -84,14 +82,33 @@
             <li>"Activitat mitòtica a les capes de la dermis"</li>
           </ul>
           Qualsevol referència a la penetració més enllà de l'epidermis indica que el melanoma és invasiu.
-        </div>        
+        </div>              
+        <div class="button-group">
+          <button type="button" class="button-yes" onclick="toggleQuestions(2,'si')">In situ</button>
+          <button type="button" class="button-no" onclick="toggleQuestions(2,'no')">Invasiu</button>
+          <button type="button" class="button-no-especificat" onclick="toggleQuestions(2,'no-especificat')">No especificat</button>
+          <button type="button" class="button-skip" onclick="toggleQuestions(2,'skip')">Skip</button>
+        </div>
+
+        
+      </div>
+
+      <!-- Question 3 
+       Question 3 ha sigut deprecated, i s'ha afegit a question2
+      <div id="question3-container" class="question-container">
+        
         <div class="button-group">
           <button type="button" class="button-yes" onclick="toggleQuestions(3,'si')">Sí</button>
           <button type="button" class="button-no" onclick="toggleQuestions(3,'no')">No</button>
         </div>
-      </div>
+      </div>-->
 
     </form>
+  </div>
+
+    <!-- Go Back button positioned at the bottom right -->
+  <div class="endarrere-button">
+    <button onclick="goBackButton()" style="padding: 8px 16px; font-size: 1rem; border-radius: 5px;">Endarrere</button>
   </div>
 
 </body>

@@ -10,9 +10,16 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Query to get a random row from the 'papers' table
-    $query = "SELECT * FROM papers WHERE estat NOT IN ('busy','tagged') ORDER BY RAND() LIMIT 1";
-    
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
+
+    if ( !isset($id) ){
+        // Query to get a random row from the 'papers' table
+        $query = "SELECT * FROM papers WHERE estat NOT IN ('busy','tagged') ORDER BY RAND() LIMIT 1";
+    }else{
+        // Query to get a random row from the 'papers' table
+        $query = "SELECT * FROM papers WHERE numero_identificador = $id";
+    }
+
     $stmt = $pdo->query($query);
     if ($stmt) {
         // Fetch the random row

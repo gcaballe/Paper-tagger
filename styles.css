@@ -46,13 +46,18 @@ textarea:focus {
 .button-group button {
   width: 120px;
   height: 60px;
-  font-size: 1.2rem;
+  font-size: clamp(0.8rem, 2vw, 1.2rem); /* Responsive font size */
   font-weight: 500;
   border: 1px solid #ced4da;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s, box-shadow 0.2s;
   color: white;
+  padding: 5px; /* Padding to keep longer text clear */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centers the text inside */
+  text-align: center; /* Centers multiline text */
 }
 
 .button-group button:hover {
@@ -62,7 +67,6 @@ textarea:focus {
 .button-yes {
   background-color: #28a745; /* Professional green for 'Yes' */
 }
-
 .button-yes:hover {
   background-color: #218838;
 }
@@ -70,10 +74,17 @@ textarea:focus {
 .button-no {
   background-color: #dc3545; /* Professional red for 'No' */
 }
-
 .button-no:hover {
   background-color: #c82333;
 }
+
+.button-skip {
+  background-color: #555; /* Professional gray for 'skip' */
+}
+.button-no-especificat {
+  background-color: #FFA500; /* Professional yellow for 'No especificat' */
+}
+
 
 #question2-container {
   display: none;
@@ -173,4 +184,12 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(14px); /* Move the knob to the right when checked */
+}
+
+.endarrere-button {
+  margin-top: 40px;
+  margin-left: 20px; /* Distance from the bottom */
+  padding: 8px 16px; /* Padding for the button */
+  border-radius: 5px; /* Rounded corners */
+  color: white; /* Button text color */
 }

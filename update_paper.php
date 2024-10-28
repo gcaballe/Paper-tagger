@@ -24,15 +24,29 @@ try {
         $sql = "UPDATE papers 
                 SET estat = :estat, pregunta1 = :pregunta1, pregunta2 = :pregunta2, pregunta3 = :pregunta3, user = :user 
                 WHERE numero_identificador = :numero_identificador";
-                
+        
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':estat', $estat);
-        $stmt->bindParam(':pregunta1', $pregunta1, PDO::PARAM_BOOL);
-        $stmt->bindParam(':pregunta2', $pregunta2, PDO::PARAM_BOOL);
-        $stmt->bindParam(':pregunta3', $pregunta3, PDO::PARAM_BOOL);
+        if (is_null($pregunta1)) {
+            $stmt->bindParam(':pregunta1', $pregunta1, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindParam(':pregunta1', $pregunta1, PDO::PARAM_INT); // Use PDO::PARAM_INT for 1 or 0
+        }
+        if (is_null($pregunta2)) {
+            $stmt->bindParam(':pregunta2', $pregunta2, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindParam(':pregunta2', $pregunta2, PDO::PARAM_INT); // Use PDO::PARAM_INT for 1 or 0
+        }
+        if (is_null($pregunta3)) {
+            $stmt->bindParam(':pregunta3', $pregunta3, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindParam(':pregunta3', $pregunta3, PDO::PARAM_INT); // Use PDO::PARAM_INT for 1 or 0
+        }
         $stmt->bindParam(':numero_identificador', $numero_identificador);
         $stmt->bindParam(':user', $user);
         
+        
+
         // Execute the query
         if ($stmt->execute()) {
             echo json_encode(['status' => 'success']);
