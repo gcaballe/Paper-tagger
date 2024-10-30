@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   
+    
+
     var idStack = []; //per poder tornar endarrere
 
     window.toggleQuestions = function(question, answer) {
@@ -68,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             //Do nothing to the BD, just show question2
             return;
         } else if (answer === 'no') {
-            data.pregunta1 = true;
+            data.pregunta1 = false;
         } else if (answer === 'skip') {
             data.pregunta1 = null;
             data.pregunta2 = null;
@@ -223,4 +225,75 @@ document.addEventListener('DOMContentLoaded', function () {
         
     }
 
+// Function to fetch and display ranking data
+// Function to display fireworks
+function showFireworks() {
+    const fireworks = document.getElementById('fireworks-container');
+    fireworks.classList.remove('hidden');
+    
+    // Hide fireworks after 4 seconds
+    setTimeout(() => {
+      fireworks.classList.add('hidden');
+    }, 6000);
+  }
+  
+  // Function to fetch and display ranking data
+  async function displayRanking() {
+    try {
+      const response = await fetch('./fetch_ranking.php');
+      const data = await response.json();
+
+      const tableBody = document.getElementById('rankingTableBody');
+      tableBody.innerHTML = ''; // Clear previous content
+    
+      // Loop through the data and create table rows
+      data.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${item.user}</td>
+          <td>${item.today_paper_count}</td>
+          <td>${item.paper_count}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+  
+    } catch (error) {
+      console.error('Error fetching ranking data:', error);
+    }
+  }
+  
+  // Toggle modal visibility
+  function toggleModal() {
+    const modal = document.getElementById('rankingModal');
+    modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+
+    //Sleep for 1 second to wait for the info to be loaded, to then check if the user is the top user
+    setTimeout(function(){
+        if (modal.style.display === 'block'){
+        
+            const firstUser = document.querySelector("#rankingTableBody tr:first-child td:nth-child(2)").textContent.trim();
+    
+            const currentUser = document.getElementById('user').value;
+    
+            // Check if the top user matches the current user and show fireworks if it does
+            if (firstUser === currentUser) {
+                showFireworks();
+            }
+        }
+    }, 1000);
+    
+  }
+  
+  // Add event listener to the crown button
+  document.getElementById('toggleModalBtn').addEventListener('click', () => {
+    displayRanking();
+    toggleModal();
+  });
+  
+
 });
+
+
+
+

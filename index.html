@@ -74,23 +74,23 @@
           <p>Melanoma in situ</p>
           Fixa’t en frases que indiquin un creixement confinat o superficial:
           <ul>
-            <li>"Melanoma cutani in situ."</li>
-            <li>"Confinat a l’epidermis."</li>
-            <li>"Sense evidència d'invasió a la dermis."</li>
+            <li>"Melanoma in situ"</li>
+            <li>"Confinat a l’epidermis"</li>
+            <li>"Sense evidència d'invasió a la dermis"</li>
           </ul>
           Aquestes indicacions assenyalen que el melanoma no ha penetrat més enllà de la capa externa de la pell i s’hauria d’etiquetar com a in situ.
         </div>
         
         <div class="explanation">
-          <p>Melanoma cutani invasiu</p>
+          <p>Melanoma invasiu</p>
           Busca mencions de la profunditat d'invasió a la dermis o més enllà:
           <ul>
-            <li>"Melanoma invasiu/invasor."</li>
-            <li>"Índex de Breslow" (qualsevol menció a una mesura de Breslow implica melanoma invasiu).</li>
-            <li>"Índex de Clark 2 o superior." <li>
-            <li>"Invasió de la dermis o del teixit subcutani."</li>
-            <li>"Activitat mitòtica a les capes de la dermis."</li>
-            <li>"L'infiltrat limfocitari a la dermis no equival a invasió per cèl·lules melanocítiques sinó a reacció inflamatòria."<li>
+            <li>"Melanoma invasiu" o "Melanoma invasor"</li>
+            <li>"Índex de Breslow" (qualsevol menció a una mesura de Breslow implica melanoma invasiu)"</li>
+            <li>"Índex de Clark II" o superior </li>
+            <li>"Invasió de la dermis" o "Invasió del teixit subcutani"</li>
+            <li>"Activitat mitòtica a les capes de la dermis"</li>
+            <li>L'infiltrat limfocitari a la dermis no equival a invasió per cèl·lules melanocítiques sinó a reacció inflamatòria</li>
           </ul>
           Qualsevol referència a la penetració més enllà de l'epidermis indica que el melanoma és invasiu.
         </div>              
@@ -112,6 +112,36 @@
     <button type="button" class="skip-button" onclick="toggleQuestions(1, 'skip')">Skip</button>
   </div>
   
+ 
+  <!-- Modal pel ranking -->
+  <div class="ranking-modal" id="rankingModal">
+    <table>
+      <thead>
+        <tr>
+          <th>Nº</th>
+          <th>User</th>
+          <th>Tagged today</th>
+          <th>All-time</th>
+        </tr>
+      </thead>
+      <tbody id="rankingTableBody">
+        
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Crown button to toggle the modal -->
+  <button id="toggleModalBtn" class="crown-button">
+    <i class="fas fa-crown"></i>
+  </button>
+
+  <!-- Fireworks container -->
+   <div id="fireworks-container" class="hidden fireworks-container">
+    <div class="pyro">
+      <div class="before"></div>
+      <div class="after"></div>
+    </div>
+   </div>
 
 </body>
 </html>
