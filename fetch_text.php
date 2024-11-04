@@ -14,7 +14,7 @@ try {
 
     if ( !isset($id) ){
         // Query to get a random row from the 'papers' table
-        $query = "SELECT * FROM papers WHERE estat NOT IN ('busy','tagged') ORDER BY RAND() LIMIT 1";
+        $query = "SELECT * FROM papers WHERE estat NOT IN ('busy','tagged','flagged') ORDER BY RAND() LIMIT 1";
     }else{
         // Query to get a random row from the 'papers' table
         $query = "SELECT * FROM papers WHERE numero_identificador = $id";
